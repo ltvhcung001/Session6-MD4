@@ -19,4 +19,11 @@ public class PatientController {
         Patient savedPatient = patientRepository.save(patient);
         return new ResponseEntity<>(savedPatient, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
+        return patientRepository.findById(id)
+                .map(patient -> new ResponseEntity<>(patient, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }
